@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>Hello World | YF的个人博客</title>
+  <title>Hexo引用本地图片 | YF的个人博客</title>
   <meta name="keywords" content=" hexo ">
-  <meta name="description" content="Hello World | YF的个人博客">
+  <meta name="description" content="Hexo引用本地图片 | YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="YF的个人博客">
@@ -244,9 +244,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-hexo-quote-local-picture" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Hello World</h1>
+        <h1 class="article-title">Hexo引用本地图片</h1>
     
     <div class="article-meta">
         
@@ -262,12 +262,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-09-20 20:42:00'>2019-09-17 15:19</time>
+        创建时间:<time class="date" title='更新时间: 2019-09-23 16:05:57'>2019-09-20 17:28</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:73</span>
+        <span>字数:226</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -297,7 +297,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤一"><span class="toc-text">步骤一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤二"><span class="toc-text">步骤二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤三"><span class="toc-text">步骤三</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何引用"><span class="toc-text">如何引用</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -312,19 +312,25 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h3 id="步骤一"><a href="#步骤一" class="headerlink" title="步骤一"></a>步骤一</h3><p>在根目录下的<code>_config.yml</code>配置文件中设置<code>post_asset_folder:true</code></p>
+<blockquote>
+<p>Hexo 提供了一种更方便管理 Asset 的设定：<code>post_asset_folder</code><br>当您设置<code>post_asset_folder</code>为<code>true</code>参数后，在建立文件时，<code>Hexo</code><br>会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。</p>
+</blockquote>
+<h3 id="步骤二"><a href="#步骤二" class="headerlink" title="步骤二"></a>步骤二</h3><p>在hexo的目录下执行<code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code></p>
+<h3 id="步骤三"><a href="#步骤三" class="headerlink" title="步骤三"></a>步骤三</h3><p>完成安装后用<code>hexo</code>新建文章的时候会发现<code>_posts</code>目录下面会多出一个和文章名字一样的文件夹。文章中使用的图片就可以放在文件夹下面。</p>
+<p><img src="/2019/09/20/hexo-quote-local-picture/dictionary_structure.png" alt="目录结构"></p>
+<h3 id="如何引用"><a href="#如何引用" class="headerlink" title="如何引用"></a>如何引用</h3><ul>
+<li><p>方法1：</p>
+<p><img src="/2019/09/20/hexo-quote-local-picture/method-1.png" alt="方法一"></p>
+<blockquote>
+<p>ps:为什么我用这种会有问题？？</p>
+<p>路径不对，下面的是正确路径</p>
+<p><img src="/2019/09/20/hexo-quote-local-picture/screenshot-1.png" alt="路径不对"></p>
+</blockquote>
+</li>
+<li><p>方法2：<code>![logo](本地图片测试/logo.jpg)</code></p>
+</li>
+</ul>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 504537531@qq.com </span>
@@ -334,12 +340,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Hello World</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">73</span></p>
+    <p><span class="copy-title">文章标题:</span>Hexo引用本地图片</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">226</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="YF">YF</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-09-17, 15:19:55</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-20, 20:42:00</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/17/hello-world/" title="Hello World">https://zhouyufan0568.github.io/2019/09/17/hello-world/</a>
+    <p><span class="copy-title">发布时间:</span>2019-09-20, 17:28:18</p>
+    <p><span class="copy-title">最后更新:</span>2019-09-23, 16:05:57</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/20/hexo-quote-local-picture/" title="Hexo引用本地图片">https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
