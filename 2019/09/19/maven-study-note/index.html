@@ -6,18 +6,22 @@
   <meta name="keywords" content=" Maven , 开发工具 ">
   <meta name="description" content="Maven学习笔记 | YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="Spring Boot版本：2.1.8.RELEASE Spring Boot启动过程是Spring Boot源码分析的第一篇，其也是面试过程中Spring Boot方面考察较多的知识点之一。 从何入手要分析Spring Boot的启动过程，需要从Spring Boot启动类的main函数入手： @SpringBootApplication public class SpringbootAnaly">
-<meta name="keywords" content="SpringBoot,源码分析">
+<meta name="description" content="步骤一在根目录下的_config.yml配置文件中设置post_asset_folder:true  Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。  步骤二在">
+<meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot源码分析之启动过程[1]">
-<meta property="og:url" content="https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/index.html">
+<meta property="og:title" content="Hexo引用本地图片">
+<meta property="og:url" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/index.html">
 <meta property="og:site_name" content="YF的个人博客">
-<meta property="og:description" content="Spring Boot版本：2.1.8.RELEASE Spring Boot启动过程是Spring Boot源码分析的第一篇，其也是面试过程中Spring Boot方面考察较多的知识点之一。 从何入手要分析Spring Boot的启动过程，需要从Spring Boot启动类的main函数入手： @SpringBootApplication public class SpringbootAnaly">
+<meta property="og:description" content="步骤一在根目录下的_config.yml配置文件中设置post_asset_folder:true  Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。  步骤二在">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-24T14:24:44.587Z">
+<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/dictionary_structure.png">
+<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/method-1.png">
+<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/screenshot-1.png">
+<meta property="og:updated_time" content="2019-09-23T08:05:57.119Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot源码分析之启动过程[1]">
-<meta name="twitter:description" content="Spring Boot版本：2.1.8.RELEASE Spring Boot启动过程是Spring Boot源码分析的第一篇，其也是面试过程中Spring Boot方面考察较多的知识点之一。 从何入手要分析Spring Boot的启动过程，需要从Spring Boot启动类的main函数入手： @SpringBootApplication public class SpringbootAnaly">
+<meta name="twitter:title" content="Hexo引用本地图片">
+<meta name="twitter:description" content="步骤一在根目录下的_config.yml配置文件中设置post_asset_folder:true  Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。  步骤二在">
+<meta name="twitter:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/dictionary_structure.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -229,22 +233,6 @@
     
     <nav id="title-list-nav">
         
-        <a  class=""
-           href="/2019/09/20/hexo-quote-local-picture/"
-           data-tag="hexo"
-           data-author="" >
-            <span class="post-title" title="Hexo引用本地图片">Hexo引用本地图片</span>
-            <span class="post-date" title="2019-09-20 17:28:18">2019/09/20</span>
-        </a>
-        
-        <a  class=""
-           href="/2019/09/17/hello-world/"
-           data-tag="hexo"
-           data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2019-09-17 15:19:55">2019/09/17</span>
-        </a>
-        
         <a  class="源码分析 "
            href="/2019/09/23/springboot-startup-analysis/"
            data-tag="SpringBoot,源码分析"
@@ -253,12 +241,28 @@
             <span class="post-date" title="2019-09-23 16:23:14">2019/09/23</span>
         </a>
         
+        <a  class=""
+           href="/2019/09/20/hexo-quote-local-picture/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="Hexo引用本地图片">Hexo引用本地图片</span>
+            <span class="post-date" title="2019-09-20 17:28:18">2019/09/20</span>
+        </a>
+        
         <a  class="开发工具 "
            href="/2019/09/19/maven-study-note/"
            data-tag="Maven,开发工具"
            data-author="" >
             <span class="post-title" title="Maven学习笔记">Maven学习笔记</span>
             <span class="post-date" title="2019-09-19 13:55:47">2019/09/19</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/09/17/hello-world/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2019-09-17 15:19:55">2019/09/17</span>
         </a>
         
     </nav>
