@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>springboot-startup-analysis | YF的个人博客</title>
-  <meta name="keywords" content>
-  <meta name="description" content="springboot-startup-analysis | YF的个人博客">
+  <title>【源码分析】【1】Spring Boot的启动过程 | YF的个人博客</title>
+  <meta name="keywords" content=" -Spring Boot -源码分析 ">
+  <meta name="description" content="【源码分析】【1】Spring Boot的启动过程 | YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="步骤一在根目录下的_config.yml配置文件中设置post_asset_folder:true  Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。  步骤二在">
 <meta name="keywords" content="hexo">
@@ -152,6 +152,14 @@
     
         
             
+            <li><div data-rel="-Spring Boot">-Spring Boot<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
             <li><div data-rel="开发工具">开发工具<small>(1)</small></div>
                 
             </li>
@@ -168,7 +176,7 @@
     <div></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="4">
-<input type="hidden" id="yelog_site_word_count" value="12.5k">
+<input type="hidden" id="yelog_site_word_count" value="13.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -200,6 +208,10 @@
     <div class="tags-list">
     
     <li class="article-tag-list-item">
+        <a href="javascript:" class="color4">-Spring Boot -源码分析</a>
+    </li>
+    
+    <li class="article-tag-list-item">
         <a href="javascript:" class="color5">hexo</a>
     </li>
     
@@ -217,20 +229,12 @@
     
     <nav id="title-list-nav">
         
-        <a  class=""
+        <a  class="-Spring Boot "
            href="/2019/09/23/springboot-startup-analysis/"
-           data-tag=""
+           data-tag="-Spring Boot -源码分析"
            data-author="" >
-            <span class="post-title" title="springboot-startup-analysis">springboot-startup-analysis</span>
+            <span class="post-title" title="【源码分析】【1】Spring Boot的启动过程">【源码分析】【1】Spring Boot的启动过程</span>
             <span class="post-date" title="2019-09-23 16:23:14">2019/09/23</span>
-        </a>
-        
-        <a  class=""
-           href="/2019/09/17/hello-world/"
-           data-tag="hexo"
-           data-author="" >
-            <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2019-09-17 15:19:55">2019/09/17</span>
         </a>
         
         <a  class=""
@@ -239,6 +243,14 @@
            data-author="" >
             <span class="post-title" title="Hexo引用本地图片">Hexo引用本地图片</span>
             <span class="post-date" title="2019-09-20 17:28:18">2019/09/20</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/09/17/hello-world/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="Hello World">Hello World</span>
+            <span class="post-date" title="2019-09-17 15:19:55">2019/09/17</span>
         </a>
         
         <a  class="开发工具 "
@@ -263,22 +275,34 @@
     <div class="pjax">
         <article id="post-springboot-startup-analysis" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">springboot-startup-analysis</h1>
+        <h1 class="article-title">【源码分析】【1】Spring Boot的启动过程</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a href="javascript:" data-rel="-Spring Boot">-Spring Boot</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="javascript:" class="color4">-Spring Boot -源码分析</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-09-23 16:23:14'>2019-09-23 16:23</time>
+        创建时间:<time class="date" title='更新时间: 2019-09-24 22:10:54'>2019-09-23 16:23</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:0</span>
+        <span>字数:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -308,7 +332,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#从何入手"><span class="toc-text">从何入手</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step1：执行SpringApplication构造函数"><span class="toc-text">Step1：执行SpringApplication构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step2：执行SpringApplication类的实例方法run"><span class="toc-text">Step2：执行SpringApplication类的实例方法run()</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -323,7 +347,194 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>Spring Boot版本：2.1.8.RELEASE</p>
+<p>Spring Boot启动过程是Spring Boot源码分析的第一篇，其也是面试过程中Spring Boot方面考察较多的知识点之一。</p>
+<h2 id="从何入手"><a href="#从何入手" class="headerlink" title="从何入手"></a>从何入手</h2><p>要分析Spring Boot的启动过程，需要从Spring Boot启动类的main函数入手：</p>
+<pre><code class="java">@SpringBootApplication
+public class SpringbootAnalyzeApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootAnalyzeApplication.class, args);
+    }
+}</code></pre>
+<p>通过Java方法使用SpringApplication类来引导和启动Spring应用程序。</p>
+<p>通过SpringApplication.run(Class&lt;?&gt;[] primarySources, String[] args) new一个SpringApplication实例，并调用其run方法。</p>
+<pre><code class="java">public static ConfigurableApplicationContext run(Class&lt;?&gt;[] primarySources, String[] args) {
+    //step1：new SpringApplication
+    //step2：springApplicaiton.run()
+    return new SpringApplication(primarySources).run(args);
+}</code></pre>
+<h3 id="Step1：执行SpringApplication构造函数"><a href="#Step1：执行SpringApplication构造函数" class="headerlink" title="Step1：执行SpringApplication构造函数"></a>Step1：执行SpringApplication构造函数</h3><p>SpringApplication构造函数主要执行以下步骤：</p>
+<ol>
+<li>判断应用程序的类型</li>
+<li>设置初始化器</li>
+<li>设置监听器</li>
+<li>找到项目的主类</li>
+</ol>
+<p>new关键字调用SpringApplication的构造函数如下：</p>
+<pre><code class="java">public SpringApplication(ResourceLoader resourceLoader, Class&lt;?&gt;... primarySources) {
+    //要使用的资源加载器，在上面的main函数中并没有传，因此为null
+    this.resourceLoader = resourceLoader;
+    Assert.notNull(primarySources, &quot;PrimarySources must not be null&quot;);
+    //主要的bean资源，其实就是在main函数中传进去的SpringbootAnalyzeApplication类，即项目启动类
+    this.primarySources = new LinkedHashSet&lt;&gt;(Arrays.asList(primarySources));
+    //1.通过classpath中导入的jar包，判断应用程序的类型，有servlet/reactive/none类型
+    //当我们引入spring-boot-starter-web，就是servlet类型
+    this.webApplicationType = WebApplicationType.deduceFromClasspath();
+    //2.读取spring.factories文件中要载入的初始化器，并实例化
+    setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
+    //3.读取spring.factories文件中要载入的监听器，并实例化
+    setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
+    //4.找到项目的主类
+    this.mainApplicationClass = deduceMainApplicationClass();
+}</code></pre>
+<p>通过setInitializers和setListeners函数，Spring Boot从spring.factories文件中设置了如下实例：</p>
+<p>![1569297577400](C:\Users\Yufan Zhou\AppData\Roaming\Typora\typora-user-images\1569297577400.png)</p>
+<p>![1569297638129](C:\Users\Yufan Zhou\AppData\Roaming\Typora\typora-user-images\1569297638129.png)</p>
+<h3 id="Step2：执行SpringApplication类的实例方法run"><a href="#Step2：执行SpringApplication类的实例方法run" class="headerlink" title="Step2：执行SpringApplication类的实例方法run()"></a>Step2：执行SpringApplication类的实例方法run()</h3><p>首先介绍run方法中使用的SpringApplicationRunListeners对象</p>
+<blockquote>
+<p><strong>SpringApplicationRunListeners</strong>类是<strong>SpringApplicationRunListener</strong>对象的集合。</p>
+<p><strong>SpringApplicationRunListener</strong>是<strong>SpringApplication</strong>的<strong>run</strong>方法的监听器。</p>
+<p><strong>SpringApplicationRunListener</strong>用来发布<strong>SpringApplicationEvent</strong>Spring应用程序事件。</p>
+<p><strong>EventPublishingRunListener</strong>是<strong>SpringApplicationRunListener</strong>唯一的实现类。</p>
+</blockquote>
+<p><strong>run</strong>方法的执行步骤和对应阶段发布的事件：</p>
+<ol>
+<li>应用程序开始准备：ApplicationStartingEvent</li>
+<li>环境配置：ApplicationEnvironmentPreparedEvent</li>
+<li>创建上下文</li>
+<li>准备上下文：ApplicationContextInitializedEvent和ApplicationPreparedEvent</li>
+<li>刷新上下文：ContextRefreshedEvent和ServletWebServerInitializedEvent</li>
+<li>应用程序准备完成：ApplicationReadyEvent</li>
+</ol>
+<blockquote>
+<p>context：应用程序上下文</p>
+<p>environment：应用程序环境</p>
+</blockquote>
+<pre><code class="java">public ConfigurableApplicationContext run(String... args) {
+    //构造一个秒表，用作记录
+    StopWatch stopWatch = new StopWatch();
+    stopWatch.start();
+    ConfigurableApplicationContext context = null;
+    Collection&lt;SpringBootExceptionReporter&gt; exceptionReporters = new ArrayList&lt;&gt;();
+    configureHeadlessProperty();
+    //创建SpringApplicationRunListeners对象
+    SpringApplicationRunListeners listeners = getRunListeners(args);
+    //1.start：广播ApplicationStartingEvent事件
+    listeners.starting();
+    try {
+        //main函数带的参数
+        ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);
+        //2.环境配置：广播ApplicationEnvironmentPreparedEvent事件
+        ConfigurableEnvironment environment = prepareEnvironment(listeners, applicationArguments);
+        configureIgnoreBeanInfo(environment);
+        Banner printedBanner = printBanner(environment);
+        //3.根据程序的类型创建应用程序上下文：servlet/reactive/none
+        context = createApplicationContext();
+        exceptionReporters = getSpringFactoriesInstances(SpringBootExceptionReporter.class,
+                new Class[] { ConfigurableApplicationContext.class }, context);
+        //4.准备上下文
+        prepareContext(context, environment, listeners, applicationArguments, printedBanner);
+        //5.刷新上下文
+        //发布ContextRefreshedEvent事件
+        //发布ServletWebServerInitializedEvent事件
+        refreshContext(context);
+        //预留函数，方法体为空
+        afterRefresh(context, applicationArguments);
+        stopWatch.stop();
+        if (this.logStartupInfo) {
+            new StartupInfoLogger(this.mainApplicationClass).logStarted(getApplicationLog(), stopWatch);
+        }
+        listeners.started(context);
+        callRunners(context, applicationArguments);
+    }
+    catch (Throwable ex) {
+        handleRunFailure(context, ex, exceptionReporters, listeners);
+        throw new IllegalStateException(ex);
+    }
+    try {
+         //6.running：发布ApplicationReadyEvent事件
+        listeners.running(context);
+    }
+    catch (Throwable ex) {
+        handleRunFailure(context, ex, exceptionReporters, null);
+        throw new IllegalStateException(ex);
+    }
+    return context;
+}</code></pre>
+<p>prepareEnvironment：准备环境</p>
+<pre><code class="java">private ConfigurableEnvironment prepareEnvironment(SpringApplicationRunListeners listeners,
+        ApplicationArguments applicationArguments) {
+    // Create and configure the environment
+    //直接得到环境或者根据应用程序的类型创建一个环境
+    ConfigurableEnvironment environment = getOrCreateEnvironment();
+    configureEnvironment(environment, applicationArguments.getSourceArgs());
+    ConfigurationPropertySources.attach(environment);
+    listeners.environmentPrepared(environment);
+    bindToSpringApplication(environment);
+    if (!this.isCustomEnvironment) {
+        environment = new EnvironmentConverter(getClassLoader()).convertEnvironmentIfNecessary(environment,
+                deduceEnvironmentClass());
+    }
+    ConfigurationPropertySources.attach(environment);
+    return environment;
+}</code></pre>
+<p>createApplicationContext：创建应用程序上下文</p>
+<pre><code class="Java">protected ConfigurableApplicationContext createApplicationContext() {
+    Class&lt;?&gt; contextClass = this.applicationContextClass;
+    if (contextClass == null) {
+        try {
+             //根据应用程序的类型选择不一样的上下文
+            switch (this.webApplicationType) {
+            case SERVLET:
+                contextClass = Class.forName(DEFAULT_SERVLET_WEB_CONTEXT_CLASS);
+                break;
+            case REACTIVE:
+                contextClass = Class.forName(DEFAULT_REACTIVE_WEB_CONTEXT_CLASS);
+                break;
+            default:
+                contextClass = Class.forName(DEFAULT_CONTEXT_CLASS);
+            }
+        }
+        catch (ClassNotFoundException ex) {
+            throw new IllegalStateException(
+                    &quot;Unable create a default ApplicationContext, &quot; + &quot;please specify an ApplicationContextClass&quot;,
+                    ex);
+        }
+    }
+    return (ConfigurableApplicationContext) BeanUtils.instantiateClass(contextClass);
+}</code></pre>
+<p>prepareContext：准备上下文</p>
+<pre><code class="java">private void prepareContext(ConfigurableApplicationContext context, ConfigurableEnvironment environment,
+        SpringApplicationRunListeners listeners, ApplicationArguments applicationArguments, Banner printedBanner) {
+    //设置上下文环境
+    context.setEnvironment(environment);
+    postProcessApplicationContext(context);
+    //应用初始化器：for循环调用所有初始化器的initialize方法
+    applyInitializers(context);
+    //contextPrepared：广播ApplicationContextInitializedEvent事件
+    listeners.contextPrepared(context);
+    if (this.logStartupInfo) {
+        logStartupInfo(context.getParent() == null);
+        logStartupProfileInfo(context);
+    }
+    // Add boot specific singleton beans
+    ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+    beanFactory.registerSingleton(&quot;springApplicationArguments&quot;, applicationArguments);
+    if (printedBanner != null) {
+        beanFactory.registerSingleton(&quot;springBootBanner&quot;, printedBanner);
+    }
+    if (beanFactory instanceof DefaultListableBeanFactory) {
+        ((DefaultListableBeanFactory) beanFactory)
+                .setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
+    }
+    // Load the sources
+    Set&lt;Object&gt; sources = getAllSources();
+    Assert.notEmpty(sources, &quot;Sources must not be empty&quot;);
+    load(context, sources.toArray(new Object[0]));
+    //contextLoaded：广播ApplicationPreparedEvent事件
+    listeners.contextLoaded(context);
+}</code></pre>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 504537531@qq.com </span>
     </div>
@@ -332,12 +543,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>springboot-startup-analysis</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">0</span></p>
+    <p><span class="copy-title">文章标题:</span>【源码分析】【1】Spring Boot的启动过程</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">1.1k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="YF">YF</a></p>
     <p><span class="copy-title">发布时间:</span>2019-09-23, 16:23:14</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-23, 16:23:14</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/23/springboot-startup-analysis/" title="springboot-startup-analysis">https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/</a>
+    <p><span class="copy-title">最后更新:</span>2019-09-24, 22:10:54</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/23/springboot-startup-analysis/" title="【源码分析】【1】Spring Boot的启动过程">https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
@@ -401,7 +612,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#hexo','#Maven','#开发工具',],
+            'data': ['#-Spring Boot -源码分析','#hexo','#Maven','#开发工具',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
