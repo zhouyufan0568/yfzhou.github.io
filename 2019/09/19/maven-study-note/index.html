@@ -6,22 +6,21 @@
   <meta name="keywords" content=" Maven , 开发工具 ">
   <meta name="description" content="Maven学习笔记 | YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="步骤一在根目录下的_config.yml配置文件中设置post_asset_folder:true  Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。  步骤二在">
-<meta name="keywords" content="hexo">
+<meta name="description" content="Spring Boot版本：2.1.8.RELEASE Spring Boot启动过程是Spring Boot源码分析的第一篇，其也是面试过程中Spring Boot方面考察较多的知识点之一。 从何入手要分析Spring Boot的启动过程，需要从Spring Boot启动类的main函数入手： @SpringBootApplication public class SpringbootAnaly">
+<meta name="keywords" content="SpringBoot,源码分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo引用本地图片">
-<meta property="og:url" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/index.html">
+<meta property="og:title" content="SpringBoot源码分析之启动过程[1]">
+<meta property="og:url" content="https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/index.html">
 <meta property="og:site_name" content="YF的个人博客">
-<meta property="og:description" content="步骤一在根目录下的_config.yml配置文件中设置post_asset_folder:true  Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。  步骤二在">
+<meta property="og:description" content="Spring Boot版本：2.1.8.RELEASE Spring Boot启动过程是Spring Boot源码分析的第一篇，其也是面试过程中Spring Boot方面考察较多的知识点之一。 从何入手要分析Spring Boot的启动过程，需要从Spring Boot启动类的main函数入手： @SpringBootApplication public class SpringbootAnaly">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/dictionary_structure.png">
-<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/method-1.png">
-<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/screenshot-1.png">
-<meta property="og:updated_time" content="2019-09-23T08:05:57.119Z">
+<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/screenshot-initializers.png">
+<meta property="og:image" content="https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/screenshot-listeners.png">
+<meta property="og:updated_time" content="2019-09-25T08:49:35.426Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo引用本地图片">
-<meta name="twitter:description" content="步骤一在根目录下的_config.yml配置文件中设置post_asset_folder:true  Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。  步骤二在">
-<meta name="twitter:image" content="https://zhouyufan0568.github.io/2019/09/20/hexo-quote-local-picture/dictionary_structure.png">
+<meta name="twitter:title" content="SpringBoot源码分析之启动过程[1]">
+<meta name="twitter:description" content="Spring Boot版本：2.1.8.RELEASE Spring Boot启动过程是Spring Boot源码分析的第一篇，其也是面试过程中Spring Boot方面考察较多的知识点之一。 从何入手要分析Spring Boot的启动过程，需要从Spring Boot启动类的main函数入手： @SpringBootApplication public class SpringbootAnaly">
+<meta name="twitter:image" content="https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/screenshot-initializers.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -176,7 +175,7 @@
     <div></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="4">
-<input type="hidden" id="yelog_site_word_count" value="13.6k">
+<input type="hidden" id="yelog_site_word_count" value="14.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
