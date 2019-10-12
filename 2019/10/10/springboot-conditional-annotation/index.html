@@ -6,18 +6,20 @@
   <meta name="keywords" content=" SpringBoot , 源码分析 ">
   <meta name="description" content="SpringBoot源码分析之条件注解[3] | YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="本章是Spring Boot源码分析的第二章，上一章分析了Spring Boot应用程序的启动过程。 Spring容器的加载过程在Spring Boot应用程序的启动过程中，Spring容器（context）经历了以下过程：  创建容器：根据Web应用类型创建对应的容器 protected ConfigurableApplicationContext createApplicationContex">
+<meta name="description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
 <meta name="keywords" content="SpringBoot,源码分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot源码分析之容器的refresh[2]">
-<meta property="og:url" content="https://zhouyufan0568.github.io/2019/09/26/springboot-context-refresh/index.html">
+<meta property="og:title" content="SpringBoot源码分析之条件注解[3]">
+<meta property="og:url" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/index.html">
 <meta property="og:site_name" content="YF的个人博客">
-<meta property="og:description" content="本章是Spring Boot源码分析的第二章，上一章分析了Spring Boot应用程序的启动过程。 Spring容器的加载过程在Spring Boot应用程序的启动过程中，Spring容器（context）经历了以下过程：  创建容器：根据Web应用类型创建对应的容器 protected ConfigurableApplicationContext createApplicationContex">
+<meta property="og:description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-08T05:03:40.278Z">
+<meta property="og:image" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/OnClassCondition.png">
+<meta property="og:updated_time" content="2019-10-12T07:47:31.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot源码分析之容器的refresh[2]">
-<meta name="twitter:description" content="本章是Spring Boot源码分析的第二章，上一章分析了Spring Boot应用程序的启动过程。 Spring容器的加载过程在Spring Boot应用程序的启动过程中，Spring容器（context）经历了以下过程：  创建容器：根据Web应用类型创建对应的容器 protected ConfigurableApplicationContext createApplicationContex">
+<meta name="twitter:title" content="SpringBoot源码分析之条件注解[3]">
+<meta name="twitter:description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
+<meta name="twitter:image" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/OnClassCondition.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -315,12 +317,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-12 15:40:40'>2019-10-10 15:59</time>
+        创建时间:<time class="date" title='更新时间: 2019-10-12 15:47:31'>2019-10-10 15:59</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:2.1k</span>
+        <span>字数:2k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -401,7 +403,7 @@ public @interface ConditionalOnClass {
 </code></pre>
 <p>@Conditional注解指定了条件注解的处理类，@ConditionalOnClass对应的处理类是OnClassCondition类。</p>
 <p>OnClassCondition类的继承关系如图所示。OnClassCondition类继承SpringBootCondition类，实现了Condition接口。Condition接口中定义了matches方法，用于匹配指定的条件。</p>
-<p>![OnClassCondition](C:\Users\Yufan Zhou\Desktop\OnClassCondition.png)</p>
+<p><img src="/2019/10/10/springboot-conditional-annotation/OnClassCondition.png" alt="条件类的继承关系"></p>
 <p>SpringBootCondition类中的matches方法用来对条件进行匹配，其被声明为final。</p>
 <pre><code class="java">public final boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
     String classOrMethodName = getClassOrMethodName(metadata);
@@ -584,10 +586,10 @@ public @interface ConditionalOnClass {
 
 <div class="article_copyright">
     <p><span class="copy-title">文章标题:</span>SpringBoot源码分析之条件注解[3]</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">2.1k</span></p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">2k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="YF">YF</a></p>
     <p><span class="copy-title">发布时间:</span>2019-10-10, 15:59:32</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-12, 15:40:40</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-12, 15:47:31</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/10/springboot-conditional-annotation/" title="SpringBoot源码分析之条件注解[3]">https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。

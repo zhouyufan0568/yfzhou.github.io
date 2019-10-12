@@ -6,18 +6,20 @@
   <meta name="keywords" content>
   <meta name="description" content="YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="本章是Spring Boot源码分析的第二章，上一章分析了Spring Boot应用程序的启动过程。 Spring容器的加载过程在Spring Boot应用程序的启动过程中，Spring容器（context）经历了以下过程：  创建容器：根据Web应用类型创建对应的容器 protected ConfigurableApplicationContext createApplicationContex">
+<meta name="description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
 <meta name="keywords" content="SpringBoot,源码分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot源码分析之容器的refresh[2]">
-<meta property="og:url" content="https://zhouyufan0568.github.io/2019/09/26/springboot-context-refresh/index.html">
+<meta property="og:title" content="SpringBoot源码分析之条件注解[3]">
+<meta property="og:url" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/index.html">
 <meta property="og:site_name" content="YF的个人博客">
-<meta property="og:description" content="本章是Spring Boot源码分析的第二章，上一章分析了Spring Boot应用程序的启动过程。 Spring容器的加载过程在Spring Boot应用程序的启动过程中，Spring容器（context）经历了以下过程：  创建容器：根据Web应用类型创建对应的容器 protected ConfigurableApplicationContext createApplicationContex">
+<meta property="og:description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-08T05:03:40.278Z">
+<meta property="og:image" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/OnClassCondition.png">
+<meta property="og:updated_time" content="2019-10-12T07:47:31.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot源码分析之容器的refresh[2]">
-<meta name="twitter:description" content="本章是Spring Boot源码分析的第二章，上一章分析了Spring Boot应用程序的启动过程。 Spring容器的加载过程在Spring Boot应用程序的启动过程中，Spring容器（context）经历了以下过程：  创建容器：根据Web应用类型创建对应的容器 protected ConfigurableApplicationContext createApplicationContex">
+<meta name="twitter:title" content="SpringBoot源码分析之条件注解[3]">
+<meta name="twitter:description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
+<meta name="twitter:image" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/OnClassCondition.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
