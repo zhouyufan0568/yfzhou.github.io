@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>Hello World | YF的个人博客</title>
-  <meta name="keywords" content=" hexo ">
-  <meta name="description" content="Hello World | YF的个人博客">
+  <title>SpringBoot源码分析之条件注解[3] | YF的个人博客</title>
+  <meta name="keywords" content=" SpringBoot , 源码分析 ">
+  <meta name="description" content="SpringBoot源码分析之条件注解[3] | YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="本章是Spring Boot源码分析的第二章，上一章分析了Spring Boot应用程序的启动过程。 Spring容器的加载过程在Spring Boot应用程序的启动过程中，Spring容器（context）经历了以下过程：  创建容器：根据Web应用类型创建对应的容器 protected ConfigurableApplicationContext createApplicationContex">
 <meta name="keywords" content="SpringBoot,源码分析">
@@ -289,30 +289,38 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-springboot-conditional-annotation" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Hello World</h1>
+        <h1 class="article-title">SpringBoot源码分析之条件注解[3]</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            
+                <a href="javascript:" data-rel="源码分析">源码分析</a>
+            
+        </span>
+        
         
         <span class="tag">
             
-            <a href="javascript:" class="color5">hexo</a>
+            <a href="javascript:" class="color1">SpringBoot</a>
+            
+            <a href="javascript:" class="color5">源码分析</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-09-20 20:42:00'>2019-09-17 15:19</time>
+        创建时间:<time class="date" title='更新时间: 2019-10-12 15:40:40'>2019-10-10 15:59</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:75</span>
+        <span>字数:2.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -342,7 +350,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是条件注解"><span class="toc-text">什么是条件注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件注解机制"><span class="toc-text">条件注解机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件注解加载过程"><span class="toc-text">条件注解加载过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附录"><span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#条件注解大全"><span class="toc-text">条件注解大全</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -357,15 +365,215 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。</p>
+<h2 id="什么是条件注解"><a href="#什么是条件注解" class="headerlink" title="什么是条件注解"></a>什么是条件注解</h2><p>条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。</p>
+<p>常见的条件注解包括：</p>
+<ol>
+<li>@ConditionalOnClass：类加载器中是否存在对应的类。</li>
+<li>@ConditionalOnBean：Spring容器中是否存在对应的实例。</li>
+<li>@ConditionalOnExpression：判断SpEL 表达式是否成立。</li>
+<li>@ConditionalOnMissingClass：类加载器中是否不存在对应的类。</li>
+<li>@ConditionalOnMissingBean：Spring容器中是否不存在对应的实例。</li>
+</ol>
+<p>举例说明：</p>
+<pre><code class="java">@ConditionalOnClass(value = {com.zhouyufan.springbootconditionalannotation.SpringbootConditionalAnnotationApplication.class})
+@RestController
+public class TestSkip {
+    @GetMapping(&quot;/hello&quot;)
+    public String hello() {
+        return &quot;hello&quot;;
+    }
+}</code></pre>
+<p>当类加载器中包含SpringbootConditionalAnnotationApplication类对象时，TestSkip类实例才会在容器中被创建。</p>
+<h2 id="条件注解机制"><a href="#条件注解机制" class="headerlink" title="条件注解机制"></a>条件注解机制</h2><p>以@ConditionalOnClass条件注解为例，其包含了两个域，一个用来指定必须存在的类，一个用来指定必须存在的类的全限定名。</p>
+<p>此外，@ConditionalOnClass注解被@Conditional注解标注。</p>
+<pre><code class="java">@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+// @Conditional：指明一个组件必须匹配所有指定的条件才能被注册
+@Conditional(OnClassCondition.class)
+public @interface ConditionalOnClass {
+    // 指定必须存在的类
+    Class&lt;?&gt;[] value() default {};
+    // 指定必须存在的类的全限定名
+    String[] name() default {};
+}
+</code></pre>
+<p>@Conditional注解指定了条件注解的处理类，@ConditionalOnClass对应的处理类是OnClassCondition类。</p>
+<p>OnClassCondition类的继承关系如图所示。OnClassCondition类继承SpringBootCondition类，实现了Condition接口。Condition接口中定义了matches方法，用于匹配指定的条件。</p>
+<p>![OnClassCondition](C:\Users\Yufan Zhou\Desktop\OnClassCondition.png)</p>
+<p>SpringBootCondition类中的matches方法用来对条件进行匹配，其被声明为final。</p>
+<pre><code class="java">public final boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+    String classOrMethodName = getClassOrMethodName(metadata);
+    try {
+        // getMatchOutcome是SpringBootCondition类的抽象方法，由子类实现
+        ConditionOutcome outcome = getMatchOutcome(context, metadata);
+        // 记录匹配结果
+        logOutcome(classOrMethodName, outcome);
+        recordEvaluation(context, classOrMethodName, outcome);
+        return outcome.isMatch();
+    }
+    catch (NoClassDefFoundError ex) {
+        throw new IllegalStateException(&quot;Could not evaluate condition on &quot; + classOrMethodName + &quot; due to &quot;
+                + ex.getMessage() + &quot; not &quot; + &quot;found. Make sure your own configuration does not rely on &quot;
+                + &quot;that class. This can also happen if you are &quot;
+                + &quot;@ComponentScanning a springframework package (e.g. if you &quot;
+                + &quot;put a @ComponentScan in the default package by mistake)&quot;, ex);
+    }
+    catch (RuntimeException ex) {
+        throw new IllegalStateException(&quot;Error processing condition on &quot; + getName(metadata), ex);
+    }
+}</code></pre>
+<p>以子类OnClassCondition为例，其实现了SpringBootCondition类的抽象方法getMatchOutcome方法：</p>
+<pre><code class="java">public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
+    ClassLoader classLoader = context.getClassLoader();
+    ConditionMessage matchMessage = ConditionMessage.empty();
+    // 在metadata中获取条件注解指定的所有类
+    List&lt;String&gt; onClasses = getCandidates(metadata, ConditionalOnClass.class);
+    // 如果onClasses不为null时
+    if (onClasses != null) {
+        // 在类加载器中查找所有缺失的类
+        List&lt;String&gt; missing = filter(onClasses, ClassNameFilter.MISSING, classLoader);
+        // 如果存在缺失的类，则不匹配
+        if (!missing.isEmpty()) {
+            return ConditionOutcome.noMatch(ConditionMessage.forCondition(ConditionalOnClass.class)
+                    .didNotFind(&quot;required class&quot;, &quot;required classes&quot;).items(Style.QUOTE, missing));
+        }
+        // 如果满足条件，则记录匹配消息
+        matchMessage = matchMessage.andCondition(ConditionalOnClass.class)
+                .found(&quot;required class&quot;, &quot;required classes&quot;)
+                .items(Style.QUOTE, filter(onClasses, ClassNameFilter.PRESENT, classLoader));
+    }
+    // 这个方法还能处理@ConditionOnMissingClass
+    // 这说明@ConditionOnMissingClass中@Condition注解指定的也是OnClassCondition条件处理类
+    List&lt;String&gt; onMissingClasses = getCandidates(metadata, ConditionalOnMissingClass.class);
+    if (onMissingClasses != null) {
+        List&lt;String&gt; present = filter(onMissingClasses, ClassNameFilter.PRESENT, classLoader);
+        if (!present.isEmpty()) {
+            return ConditionOutcome.noMatch(ConditionMessage.forCondition(ConditionalOnMissingClass.class)
+                    .found(&quot;unwanted class&quot;, &quot;unwanted classes&quot;).items(Style.QUOTE, present));
+        }
+        matchMessage = matchMessage.andCondition(ConditionalOnMissingClass.class)
+                .didNotFind(&quot;unwanted class&quot;, &quot;unwanted classes&quot;)
+                .items(Style.QUOTE, filter(onMissingClasses, ClassNameFilter.MISSING, classLoader));
+    }
+    return ConditionOutcome.match(matchMessage);
+}</code></pre>
+<h2 id="条件注解加载过程"><a href="#条件注解加载过程" class="headerlink" title="条件注解加载过程"></a>条件注解加载过程</h2><p>了解了条件注解的机制，再来看看是在何时进行条件注解的判断的。</p>
+<p>在容器的准备和刷新阶段，所有与<code>解析、注册bean</code>有关的类都会持有ConditionEvaluator类的对象，并使用该对象完成条件注解的判断（判断是否需要跳过该类）。</p>
+<p>读取、注册bean的类包括：</p>
+<ol>
+<li>AnnotatedBeanDefinitionReader</li>
+<li>ClassPathScanningCandidateComponentProvider</li>
+<li>ConfigurationClassBeanDefinitionReader</li>
+<li>ConfigurationClassParser</li>
+</ol>
+<p>ConditionEvaluator的shouldSkip方法用来判断被@Conditional注解标记的item是否需要被跳过</p>
+<pre><code class="java">public boolean shouldSkip(@Nullable AnnotatedTypeMetadata metadata, @Nullable ConfigurationPhase phase) {
+    // 判断是否被@Conditional注解标记，未被标记直接返回false
+    if (metadata == null || !metadata.isAnnotated(Conditional.class.getName())) {
+        return false;
+    }
+    // 判断阶段是否为null
+    // 如果为null，则赋予phase一个值，重新进入该方法
+    if (phase == null) {
+        if (metadata instanceof AnnotationMetadata &amp;&amp;
+                ConfigurationClassUtils.isConfigurationCandidate((AnnotationMetadata) metadata)) {
+            return shouldSkip(metadata, ConfigurationPhase.PARSE_CONFIGURATION);
+        }
+        return shouldSkip(metadata, ConfigurationPhase.REGISTER_BEAN);
+    }
+    List&lt;Condition&gt; conditions = new ArrayList&lt;&gt;();
+    // 获取metadata中所有的condition类，例如OnClassCondition
+    for (String[] conditionClasses : getConditionClasses(metadata)) {
+        for (String conditionClass : conditionClasses) {
+            // 根据类限定名构造类实例
+            Condition condition = getCondition(conditionClass, this.context.getClassLoader());
+            conditions.add(condition);
+        }
+    }
+    AnnotationAwareOrderComparator.sort(conditions);
+    // 遍历编程阶段指定的所有condition
+    for (Condition condition : conditions) {
+        ConfigurationPhase requiredPhase = null;
+        if (condition instanceof ConfigurationCondition) {
+            requiredPhase = ((ConfigurationCondition) condition).getConfigurationPhase();
+        }
+        // 判断条件是否匹配
+        if ((requiredPhase == null || requiredPhase == phase) &amp;&amp; !condition.matches(this.context, metadata)) {
+            return true;
+        }
+    }
+    return false;
+}</code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>条件注解可以在程序运行时动态判定指定的类或者方法是否需要被加载。</p>
+<p>使用条件注解可以减少代码耦合性，使设计更加通用。</p>
+<p>不同的条件注解内部指定了具体的条件类（实现了Condition接口），不同的条件类实现了SpringBootCondition类的抽象方法getMatchOutcome方法的具体判断逻辑。</p>
+<p>在容器的准备和刷新阶段中，负责解析和注册bean的类中持有ConditionEvaluator类的对象，ConditionEvaluator类中的shouldSkip方法会调用到条件类的matches方法进行匹配。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="条件注解大全"><a href="#条件注解大全" class="headerlink" title="条件注解大全"></a>条件注解大全</h3><table>
+<thead>
+<tr>
+<th align="left">条件注解</th>
+<th align="left">对应的Condition处理类</th>
+<th align="left">处理逻辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">@ConditionalOnBean</td>
+<td align="left">OnBeanCondition</td>
+<td align="left">Spring容器中是否存在对应的实例。可以通过实例的类型、类名、注解、昵称去容器中查找(可以配置从当前容器中查找或者父容器中查找或者两者一起查找)这些属性都是数组，通过”与”的关系进行查找</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnClass</td>
+<td align="left">OnClassCondition</td>
+<td align="left">类加载器中是否存在对应的类。可以通过Class指定(value属性)或者Class的全名指定(name属性)。如果是多个类或者多个类名的话，关系是”与”关系，也就是说这些类或者类名都必须同时在类加载器中存在</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnExpression</td>
+<td align="left">OnExpressionCondition</td>
+<td align="left">判断SpEL 表达式是否成立</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnJava</td>
+<td align="left">OnJavaCondition</td>
+<td align="left">指定Java版本是否符合要求。内部有2个属性value和range。value表示一个枚举的Java版本，range表示比这个老或者新于等于指定的Java版本(默认是新于等于)。内部会基于某些jdk版本特有的类去类加载器中查询，比如如果是jdk9，类加载器中需要存在java.security.cert.URICertStoreParameters；如果是jdk8，类加载器中需要存在java.util.function.Function；如果是jdk7，类加载器中需要存在java.nio.file.Files；如果是jdk6，类加载器中需要存在java.util.ServiceLoader</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnMissingBean</td>
+<td align="left">OnBeanCondition</td>
+<td align="left">Spring容器中是否缺少对应的实例。可以通过实例的类型、类名、注解、昵称去容器中查找(可以配置从当前容器中查找或者父容器中查找或者两者一起查找)这些属性都是数组，通过”与”的关系进行查找。还多了2个属性ignored(类名)和ignoredType(类名)，匹配的过程中会忽略这些bean</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnMissingClass</td>
+<td align="left">OnClassCondition</td>
+<td align="left">跟ConditionalOnClass的处理逻辑一样，只是条件相反，在类加载器中不存在对应的类</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnNotWebApplication</td>
+<td align="left">OnWebApplicationCondition</td>
+<td align="left">应用程序是否是非Web程序，没有提供属性，只是一个标识。会从判断Web程序特有的类是否存在，环境是否是Servlet环境，容器是否是Web容器等</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnProperty</td>
+<td align="left">OnPropertyCondition</td>
+<td align="left">应用环境中的屬性是否存在。提供prefix、name、havingValue以及matchIfMissing属性。prefix表示属性名的前缀，name是属性名，havingValue是具体的属性值，matchIfMissing是个boolean值，如果属性不存在，这个matchIfMissing为true的话，会继续验证下去，否则属性不存在的话直接就相当于匹配不成功</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnResource</td>
+<td align="left">OnResourceCondition</td>
+<td align="left">是否存在指定的资源文件。只有一个属性resources，是个String数组。会从类加载器中去查询对应的资源文件是否存在</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnSingleCandidate</td>
+<td align="left">OnBeanCondition</td>
+<td align="left">Spring容器中是否存在且只存在一个对应的实例。只有3个属性value、type、search。跟ConditionalOnBean中的这3种属性值意义一样</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnWebApplication</td>
+<td align="left">OnWebApplicationCondition</td>
+<td align="left">应用程序是否是Web程序，没有提供属性，只是一个标识。会从判断Web程序特有的类是否存在，环境是否是Servlet环境，容器是否是Web容器等</td>
+</tr>
+</tbody></table>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 504537531@qq.com </span>
@@ -375,12 +583,12 @@
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>Hello World</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">75</span></p>
+    <p><span class="copy-title">文章标题:</span>SpringBoot源码分析之条件注解[3]</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">2.1k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="YF">YF</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-09-17, 15:19:55</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-20, 20:42:00</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/17/hello-world/" title="Hello World">https://zhouyufan0568.github.io/2019/09/17/hello-world/</a>
+    <p><span class="copy-title">发布时间:</span>2019-10-10, 15:59:32</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-12, 15:40:40</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/10/springboot-conditional-annotation/" title="SpringBoot源码分析之条件注解[3]">https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
