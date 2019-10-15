@@ -3,23 +3,21 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   <title>SpringBoot源码分析之启动过程[1] | YF的个人博客</title>
-  <meta name="keywords" content=" SpringBoot , 源码分析 ">
+  <meta name="keywords" content=" Spring Boot ">
   <meta name="description" content="SpringBoot源码分析之启动过程[1] | YF的个人博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
-<meta name="keywords" content="SpringBoot,源码分析">
+<meta name="description" content="本章主要分析SpringBoot的另一大特性：内嵌servlet容器。 SpringBoot提供了对内嵌Tomcat、Jetty、Undertow的支持。 内嵌servlet容器创建与启动内嵌servlet容器是在容器的刷新过程中创建并启动的。 详情请参照本系列第二章中AbstractApplicationContext类的refresh方法中调用的onRefresh方法。 onRefresh方法">
+<meta name="keywords" content="Spring Boot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot源码分析之条件注解[3]">
-<meta property="og:url" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/index.html">
+<meta property="og:title" content="SpringBoot源码分析之内嵌servlet容器[4]">
+<meta property="og:url" content="https://zhouyufan0568.github.io/2019/10/14/springboot-embedded-servlet-container/index.html">
 <meta property="og:site_name" content="YF的个人博客">
-<meta property="og:description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
+<meta property="og:description" content="本章主要分析SpringBoot的另一大特性：内嵌servlet容器。 SpringBoot提供了对内嵌Tomcat、Jetty、Undertow的支持。 内嵌servlet容器创建与启动内嵌servlet容器是在容器的刷新过程中创建并启动的。 详情请参照本系列第二章中AbstractApplicationContext类的refresh方法中调用的onRefresh方法。 onRefresh方法">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/OnClassCondition.png">
-<meta property="og:updated_time" content="2019-10-12T07:47:31.274Z">
+<meta property="og:updated_time" content="2019-10-15T03:25:30.605Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot源码分析之条件注解[3]">
-<meta name="twitter:description" content="上一章介绍了Spring Boot的容器刷新，本章介绍Spring Boot的条件注解机制。 什么是条件注解条件注解是注解的一种，可以作用于类或者方法上，被用来限制是否对该应用类或方法进行自动装配。 常见的条件注解包括：  @ConditionalOnClass：类加载器中是否存在对应的类。 @ConditionalOnBean：Spring容器中是否存在对应的实例。 @ConditionalOn">
-<meta name="twitter:image" content="https://zhouyufan0568.github.io/2019/10/10/springboot-conditional-annotation/OnClassCondition.png">
+<meta name="twitter:title" content="SpringBoot源码分析之内嵌servlet容器[4]">
+<meta name="twitter:description" content="本章主要分析SpringBoot的另一大特性：内嵌servlet容器。 SpringBoot提供了对内嵌Tomcat、Jetty、Undertow的支持。 内嵌servlet容器创建与启动内嵌servlet容器是在容器的刷新过程中创建并启动的。 详情请参照本系列第二章中AbstractApplicationContext类的refresh方法中调用的onRefresh方法。 onRefresh方法">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -146,11 +144,11 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(6)</small></div></li>
+    <li><div class="all active">全部文章<small>(7)</small></div></li>
     
         
             
-            <li><div data-rel="源码分析">源码分析<small>(3)</small></div>
+            <li><div data-rel="源码分析">源码分析<small>(4)</small></div>
                 
             </li>
             
@@ -173,8 +171,8 @@
     </div>
     <div></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="6">
-<input type="hidden" id="yelog_site_word_count" value="18.6k">
+<input type="hidden" id="yelog_site_posts_number" value="7">
+<input type="hidden" id="yelog_site_word_count" value="18.9k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -210,19 +208,11 @@
     </li>
     
     <li class="article-tag-list-item">
-        <a href="javascript:" class="color1">SpringBoot</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">源码分析</a>
+        <a href="javascript:" class="color2">Spring Boot</a>
     </li>
     
     <li class="article-tag-list-item">
         <a href="javascript:" class="color1">Maven</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a href="javascript:" class="color5">开发工具</a>
     </li>
     
     <div class="clearfix"></div>
@@ -232,8 +222,16 @@
     <nav id="title-list-nav">
         
         <a  class="源码分析 "
+           href="/2019/10/14/springboot-embedded-servlet-container/"
+           data-tag="Spring Boot"
+           data-author="" >
+            <span class="post-title" title="SpringBoot源码分析之内嵌servlet容器[4]">SpringBoot源码分析之内嵌servlet容器[4]</span>
+            <span class="post-date" title="2019-10-14 15:24:29">2019/10/14</span>
+        </a>
+        
+        <a  class="源码分析 "
            href="/2019/10/10/springboot-conditional-annotation/"
-           data-tag="SpringBoot,源码分析"
+           data-tag="Spring Boot"
            data-author="" >
             <span class="post-title" title="SpringBoot源码分析之条件注解[3]">SpringBoot源码分析之条件注解[3]</span>
             <span class="post-date" title="2019-10-10 15:59:32">2019/10/10</span>
@@ -241,7 +239,7 @@
         
         <a  class="源码分析 "
            href="/2019/09/26/springboot-context-refresh/"
-           data-tag="SpringBoot,源码分析"
+           data-tag="Spring Boot"
            data-author="" >
             <span class="post-title" title="SpringBoot源码分析之容器的refresh[2]">SpringBoot源码分析之容器的refresh[2]</span>
             <span class="post-date" title="2019-09-26 11:24:25">2019/09/26</span>
@@ -249,7 +247,7 @@
         
         <a  class="源码分析 "
            href="/2019/09/23/springboot-startup-analysis/"
-           data-tag="SpringBoot,源码分析"
+           data-tag="Spring Boot"
            data-author="" >
             <span class="post-title" title="SpringBoot源码分析之启动过程[1]">SpringBoot源码分析之启动过程[1]</span>
             <span class="post-date" title="2019-09-23 16:23:14">2019/09/23</span>
@@ -265,7 +263,7 @@
         
         <a  class="开发工具 "
            href="/2019/09/19/maven-study-note/"
-           data-tag="Maven,开发工具"
+           data-tag="Maven"
            data-author="" >
             <span class="post-title" title="Maven学习笔记">Maven学习笔记</span>
             <span class="post-date" title="2019-09-19 13:55:47">2019/09/19</span>
@@ -308,16 +306,14 @@
         
         <span class="tag">
             
-            <a href="javascript:" class="color1">SpringBoot</a>
-            
-            <a href="javascript:" class="color5">源码分析</a>
+            <a href="javascript:" class="color2">Spring Boot</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-09-26 11:31:47'>2019-09-23 16:23</time>
+        创建时间:<time class="date" title='更新时间: 2019-10-15 11:26:22'>2019-09-23 16:23</time>
         
     </div>
     <div class="article-meta">
@@ -797,7 +793,7 @@ public interface ApplicationListener&lt;E extends ApplicationEvent&gt; extends E
     <p><span class="copy-title">文章字数:</span><span class="post-count">2.2k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="YF">YF</a></p>
     <p><span class="copy-title">发布时间:</span>2019-09-23, 16:23:14</p>
-    <p><span class="copy-title">最后更新:</span>2019-09-26, 11:31:47</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-15, 11:26:22</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/09/23/springboot-startup-analysis/" title="SpringBoot源码分析之启动过程[1]">https://zhouyufan0568.github.io/2019/09/23/springboot-startup-analysis/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -862,7 +858,7 @@ public interface ApplicationListener&lt;E extends ApplicationEvent&gt; extends E
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': ['#hexo','#SpringBoot','#源码分析','#Maven','#开发工具',],
+            'data': ['#hexo','#Spring Boot','#Maven',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');
