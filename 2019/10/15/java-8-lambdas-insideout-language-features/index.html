@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="YF的个人博客">
 <meta property="og:description" content="在分析SpringBoot源码的过程中，接触到方法引用。在查阅过程中发现其属于Java 8中的Lambda新特性，本着学习的态度，通过网上博客的方式详细学习一下Java 8 Lambda并做好笔记。 为什么要学习Java 8 Lambda 入职前的知识储备 Lambda作为Java 8的新特性，是Java程序员必须掌握的知识   警告（Caveats）如果你不知道什么是函数式编程，或者不了解 ma">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-15T08:08:19.238Z">
+<meta property="og:updated_time" content="2019-10-15T15:45:55.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转]深入理解Java 8 Lambda（语言篇——lambda，方法引用，目标类型和默认方法）">
 <meta name="twitter:description" content="在分析SpringBoot源码的过程中，接触到方法引用。在查阅过程中发现其属于Java 8中的Lambda新特性，本着学习的态度，通过网上博客的方式详细学习一下Java 8 Lambda并做好笔记。 为什么要学习Java 8 Lambda 入职前的知识储备 Lambda作为Java 8的新特性，是Java程序员必须掌握的知识   警告（Caveats）如果你不知道什么是函数式编程，或者不了解 ma">
@@ -325,7 +325,7 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-10-15 16:08:19'>2019-10-15 11:23</time>
+        创建时间:<time class="date" title='更新时间: 2019-10-15 23:45:55'>2019-10-15 11:23</time>
         
     </div>
     <div class="article-meta">
@@ -437,7 +437,7 @@
 <li>接口天然就拥有其运行时表示（Runtime representation）</li>
 <li>接口可以通过 Javadoc 注释来表达一些非正式的协定（contract），例如，通过注释说明该操作应可交换（commutative）</li>
 </ul>
-<p>上面提到的 <code>ActionListener</code> 接口只有一个方法，大多数回调接口都拥有这个特征：比如 <code>Runnable</code> 接口和 <code>Comparator</code> 接口。<strong>我们把这些只拥有一个方法的接口称为 <em>函数式接口</em></strong>。（之前它们被称为 <em>SAM类型</em>，即 <em>单抽象方法类型</em>（Single Abstract Method））</p>
+<p>上面提到的 <code>ActionListener</code> 接口只有一个方法，大多数回调接口都拥有这个特征：比如 <code>Runnable</code> 接口和 <code>Comparator</code> 接口。<code>我们把这些只拥有一个方法的接口称为 *函数式接口*</code>。（之前它们被称为 <em>SAM类型</em>，即 <em>单抽象方法类型</em>（Single Abstract Method））</p>
 <p>我们并不需要额外的工作来声明一个接口是函数式接口：编译器会根据接口的结构自行判断（判断过程并非简单的对接口方法计数：一个接口可能冗余的定义了一个 <code>Object</code> 已经提供的方法，比如 <code>toString()</code>，或者定义了静态方法或默认方法，这些都不属于函数式接口方法的范畴）。不过API作者们可以通过 <code>@FunctionalInterface</code> 注解来显式指定一个接口是函数式接口（以避免无意声明了一个符合函数式标准的接口），加上这个注解之后，编译器就会验证该接口是否满足函数式接口的要求。</p>
 <p>实现函数式类型的另一种方式是引入一个全新的 <em>结构化</em> 函数类型，我们也称其为“箭头”类型。例如，一个接收 <code>String</code> 和 <code>Object</code> 并返回 <code>int</code> 的函数类型可以被表示为 <code>(String, Object) -&gt; int</code>。我们仔细考虑了这个方式，但出于下面的原因，最终将其否定：</p>
 <ul>
@@ -466,7 +466,7 @@
 </ul>
 <p>除了上面的这些基本的函数式接口，我们还提供了一些针对原始类型（Primitive type）的特化（Specialization）函数式接口，例如 <code>IntSupplier</code> 和 <code>LongBinaryOperator</code>。（我们只为 <code>int</code>、<code>long</code> 和 <code>double</code> 提供了特化函数式接口，如果需要使用其它原始类型则需要进行类型转换）同样的我们也提供了一些针对多个参数的函数式接口，例如 <code>BiFunction</code>，它接收 <code>T</code> 对象和 <code>U</code> 对象，返回 <code>R</code> 对象。</p>
 <h3 id="3-lambda表达式（lambda-expressions）"><a href="#3-lambda表达式（lambda-expressions）" class="headerlink" title="3. lambda表达式（lambda expressions）"></a>3. lambda表达式（lambda expressions）</h3><p>匿名类型最大的问题就在于其冗余的语法。有人戏称匿名类型导致了“高度问题”（height problem）：比如前面 <code>ActionListener</code> 的例子里的五行代码中仅有一行在做实际工作。</p>
-<p>lambda表达式是匿名方法，它提供了轻量级的语法，从而解决了匿名内部类带来的“高度问题”。</p>
+<p><code>lambda表达式是匿名方法，它提供了轻量级的语法，从而解决了匿名内部类带来的“高度问题”。</code></p>
 <p>下面是一些lambda表达式：</p>
 <pre><code>(int x, int y) -&gt; x + y() -&gt; 42(String s) -&gt; { System.out.println(s); }</code></pre><p>第一个 lambda 表达式接收 <code>x</code> 和 <code>y</code> 这两个整形参数并返回它们的和；第二个 lambda 表达式不接收参数，返回整数 ‘42’；第三个 lambda 表达式接收一个字符串并把它打印到控制台，不返回值。</p>
 <p>lambda 表达式的语法由参数列表、箭头符号 <code>-&gt;</code> 和函数体组成。函数体既可以是一个表达式，也可以是一个语句块：</p>
@@ -485,7 +485,7 @@
 <pre><code>FileFilter java = (File f) -&gt; f.getName().endsWith(&quot;*.java&quot;);String user = doPrivileged(() -&gt; System.getProperty(&quot;user.name&quot;));new Thread(() -&gt; {  connectToService();  sendNotification();}).start();</code></pre><h3 id="4-目标类型（Target-typing）"><a href="#4-目标类型（Target-typing）" class="headerlink" title="4. 目标类型（Target typing）"></a>4. 目标类型（Target typing）</h3><p>需要注意的是，函数式接口的名称并不是 lambda 表达式的一部分。那么问题来了，对于给定的 lambda 表达式，它的类型是什么？答案是：它的类型是由其上下文推导而来。例如，下面代码中的 lambda 表达式类型是 <code>ActionListener</code>：</p>
 <pre><code>ActionListener l = (ActionEvent e) -&gt; ui.dazzle(e.getModifiers());</code></pre><p>这就意味着同样的 lambda 表达式在不同上下文里可以拥有不同的类型：</p>
 <pre><code>Callable&lt;String&gt; c = () -&gt; &quot;done&quot;;PrivilegedAction&lt;String&gt; a = () -&gt; &quot;done&quot;;</code></pre><p>第一个 lambda 表达式 <code>() -&gt; &quot;done&quot;</code> 是 <code>Callable</code> 的实例，而第二个 lambda 表达式则是 <code>PrivilegedAction</code> 的实例。</p>
-<p>编译器负责推导 lambda 表达式类型。它利用 lambda 表达式所在上下文 <strong>所期待的类型</strong> 进行推导，这个 <strong>被期待的类型</strong> 被称为 <em>目标类型</em>。lambda 表达式只能出现在目标类型为函数式接口的上下文中。</p>
+<p><code>编译器负责推导 lambda 表达式类型。它利用 lambda 表达式所在上下文 **所期待的类型** 进行推导，这个 **被期待的类型** 被称为 *目标类型*。**lambda 表达式只能出现在目标类型为函数式接口的上下文中。**</code></p>
 <p>当然，lambda 表达式对目标类型也是有要求的。编译器会检查 lambda 表达式的类型和目标类型的方法签名（method signature）是否一致。当且仅当下面所有条件均满足时，lambda 表达式才可以被赋给目标类型 <code>T</code>：</p>
 <ul>
 <li><code>T</code> 是一个函数式接口</li>
@@ -610,7 +610,7 @@
     <p><span class="copy-title">文章字数:</span><span class="post-count">8.7k</span></p>
     <p><span class="copy-title">本文作者:</span><a href="javascript:void(0)" title="YF">YF</a></p>
     <p><span class="copy-title">发布时间:</span>2019-10-15, 11:23:42</p>
-    <p><span class="copy-title">最后更新:</span>2019-10-15, 16:08:19</p>
+    <p><span class="copy-title">最后更新:</span>2019-10-15, 23:45:55</p>
     <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/10/15/java-8-lambdas-insideout-language-features/" title="[转]深入理解Java 8 Lambda（语言篇——lambda，方法引用，目标类型和默认方法）">https://zhouyufan0568.github.io/2019/10/15/java-8-lambdas-insideout-language-features/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
@@ -692,7 +692,8 @@
         /*高亮代码块行号*/
         
         $('pre code').each(function(){
-            var lines = $(this).text().split('\n').length - 1, widther='';
+            // var lines = $(this).text().split('\n').length - 1, widther='';
+            var lines = $(this).text().split('\n').length, widther='';
             if (lines>99) {
                 widther = 'widther'
             }
